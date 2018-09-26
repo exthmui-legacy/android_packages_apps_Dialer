@@ -23,4 +23,8 @@
     <string name="recording_time_text">Recording</string>
     <string name="recording_warning_title">Enable call recording?</string>
     <string name="recording_warning_text">Notice: You are responsible for compliance with any laws, regulations and rules that apply to the use of call recording functionality and the use or distribution of those recordings.</string>
+    <!-- Automatically call recording -->
+    <string name="auto_call_recording_key" translatable="false">auto_call_recording</string>
+    <string name="auto_call_recording_title">Recording automatically</string>
+    <string name="auto_call_recording_summary">Recording automatically after call</string>
 </resources>
