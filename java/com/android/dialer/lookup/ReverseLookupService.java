@@ -65,6 +65,10 @@ public class ReverseLookupService implements PhoneNumberService, Handler.Callbac
     String normalizedNumber = phoneNumber != null
         ? PhoneNumberUtils.formatNumberToE164(phoneNumber, countryIso) : null;
 
+    if (normalizedNumber == null && LookupUtils.isChineseCustomerServiceHotline(normalizedNumber, phoneNumber, countryIso)) {
+      normalizedNumber = phoneNumber;
+    }
+
     // Can't do reverse lookup without a number
     if (normalizedNumber == null) {
       return;
