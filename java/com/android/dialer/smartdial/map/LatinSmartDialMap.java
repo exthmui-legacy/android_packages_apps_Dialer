@@ -16,9 +16,14 @@
 
 package com.android.dialer.smartdial.map;
 
+import android.content.Context;
 import android.support.v4.util.SimpleArrayMap;
 import com.android.dialer.dialpadview.DialpadCharMappings;
+import com.android.dialer.smartdial.util.SmartDialMatchPosition;
+import com.android.dialer.smartdial.util.SmartDialNameMatcher;
 import com.google.common.base.Optional;
+
+import java.util.ArrayList;
 
 /** A {@link SmartDialMap} for the Latin alphabet, which is for T9 dialpad searching. */
 @SuppressWarnings("Guava")
@@ -744,5 +749,15 @@ final class LatinSmartDialMap extends SmartDialMap {
   @Override
   SimpleArrayMap<Character, Character> getCharToKeyMap() {
     return DialpadCharMappings.getDefaultCharToKeyMap();
+  }
+
+  @Override
+  public boolean matchesCombination(Context context, SmartDialNameMatcher smartDialNameMatcher, String displayName, String query, ArrayList<SmartDialMatchPosition> matchList) {
+    return smartDialNameMatcher.matchesCombination(context, displayName, query, matchList);
+  }
+
+  @Override
+  public String transliterateName(String index) {
+    return index;
   }
 }

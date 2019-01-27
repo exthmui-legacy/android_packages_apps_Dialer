@@ -23,6 +23,8 @@ import android.support.annotation.VisibleForTesting;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import com.android.dialer.smartdial.map.CompositeSmartDialMap;
+import com.android.dialer.smartdial.map.SmartDialMap;
+import com.google.common.base.Optional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -64,6 +66,9 @@ public class SmartDialPrefix {
 
   private static boolean nanpInitialized = false;
 
+  /** Dialpad extra mapping. */
+  private static Optional<SmartDialMap> extraMap = null;
+
   /** Initializes the Nanp settings, and finds out whether user is in a NANP region. */
   public static void initializeNanpSettings(Context context) {
     final TelephonyManager manager =
@@ -85,6 +90,7 @@ public class SmartDialPrefix {
     }
     /** Queries the NANP country list to find out whether user is in a NANP region. */
     userInNanpRegion = isCountryNanp(userSimCountryCode);
+    extraMap = CompositeSmartDialMap.getExtraMap(context);
     nanpInitialized = true;
   }
 
@@ -133,6 +139,9 @@ public class SmartDialPrefix {
    */
   public static ArrayList<String> generateNamePrefixes(Context context, String index) {
     final ArrayList<String> result = new ArrayList<>();
+    if (extraMap.isPresent()) {
+      index = extraMap.get().transliterateName(index);
+    }
 
     /** Parses the name into a list of tokens. */
     final ArrayList<String> indexTokens = parseToIndexTokens(context, index);
@@ -180,7 +189,6 @@ public class SmartDialPrefix {
         }
       }
     }
-
     return result;
   }
 
@@ -253,10 +261,9 @@ public class SmartDialPrefix {
          * If the number does not start with '+', finds out whether it is in NANP format and has '1'
          * preceding the number.
          */
-        if ((normalizedNumber.length() == 11)
-            && (normalizedNumber.charAt(0) == '1')
-            && (userInNanpRegion)) {
-          countryCode = "1";
+        if ((normalizedNumber.length() == 11) && (normalizedNumber.charAt(0) == '1'
+                || normalizedNumber.charAt(0) == '7') && (userInNanpRegion)) {
+          countryCode = normalizedNumber.substring(0, 1);
           countryCodeOffset = number.indexOf(normalizedNumber.charAt(1));
           if (countryCodeOffset == -1) {
             countryCodeOffset = 0;
@@ -273,7 +280,8 @@ public class SmartDialPrefix {
            * code, and finds out offset of the local number.
            */
           areaCode = normalizedNumber.substring(0, 3);
-        } else if (countryCode.equals("1") && normalizedNumber.length() == 11) {
+        } else if ((countryCode.equals("1") || countryCode.equals("7")) &&
+                normalizedNumber.length() == 11) {
           /**
            * If the number has country code '1', finds out area code and offset of the local number.
            */
