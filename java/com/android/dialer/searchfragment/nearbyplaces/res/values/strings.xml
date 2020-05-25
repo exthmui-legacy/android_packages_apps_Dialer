@@ -16,7 +16,7 @@
   -->
 <resources>
   <!-- Label for a list of local search results [CHAR LIMIT=30]-->
-  <string name="nearby_places">Nearby places</string>
+  <string name="phone_number_suggestions">Suggestions</string>
 
   <!-- Shown as a prompt to turn on location permissions and/or enable location to allow nearby places search [CHAR LIMIT=NONE]-->
   <string name="search_location_permission">To get contact information for places near you, allow access to your location.</string>

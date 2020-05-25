@@ -57,6 +57,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.exthmui.yellowpage.PhoneNumberTag;
+
 /**
  * Maintains the list of active calls and notifies interested classes of changes to the call list as
  * they are received from the telephony stack. Primary listener of changes to this class is
@@ -187,6 +189,27 @@ public class CallList implements DialerCallDelegate {
       Trace.beginSection("updateUserMarkedSpamStatus");
       Trace.endSection();
     }
+    Trace.endSection();
+
+    Trace.beginSection("checkCallerTag");
+    String number = TelecomCallUtil.getNumber(telecomCall);
+    ListenableFuture<PhoneNumberTag.PhoneNumberInfo> pInfoStatus = PhoneNumberTag.getPhoneNumberInfoLF(context, number, call.getCountryIso());
+    Futures.addCallback(
+        pInfoStatus,
+        new FutureCallback<PhoneNumberTag.PhoneNumberInfo>() {
+          @Override
+          public void onSuccess(@Nullable PhoneNumberTag.PhoneNumberInfo result) {
+            call.setCallerInfo(result);
+            onUpdateCall(call);
+            notifyGenericListeners();
+          }
+
+          @Override
+          public void onFailure(Throwable t) {
+            LogUtil.e("CallList.onFailure", "unable to query exTHmUI caller tag", t);
+          }
+        },
+        DialerExecutorComponent.get(context).uiExecutor());
     Trace.endSection();
 
     Trace.beginSection("checkBlock");

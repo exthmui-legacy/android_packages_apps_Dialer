@@ -16,6 +16,7 @@
 
 package com.android.dialer.app.contactinfo;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -32,6 +33,8 @@ import java.lang.ref.WeakReference;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
+
+import org.exthmui.yellowpage.YellowPageReader;
 
 /**
  * This is a cache of contact details for the phone numbers in the call log. The key is the phone
@@ -56,6 +59,7 @@ public class ContactInfoCache {
   private final OnContactInfoChangedListener onContactInfoChangedListener;
   private final BlockingQueue<ContactInfoRequest> updateRequests;
   private final Handler handler;
+  private Context mContext;
   private CequintCallerIdManager cequintCallerIdManager;
   private QueryThread contactInfoQueryThread;
   private volatile boolean requestProcessingDisabled = false;
@@ -99,6 +103,10 @@ public class ContactInfoCache {
 
   public void setCequintCallerIdManager(CequintCallerIdManager cequintCallerIdManager) {
     this.cequintCallerIdManager = cequintCallerIdManager;
+  }
+
+  public void setContext(Context context) {
+    this.mContext = context;
   }
 
   public ContactInfo getValue(

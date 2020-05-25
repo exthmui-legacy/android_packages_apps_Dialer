@@ -273,7 +273,11 @@ public class LookupCache {
   private static String formatE164(Context context, String number) {
     TelephonyManager tm = context.getSystemService(TelephonyManager.class);
     String countryIso = tm.getSimCountryIso().toUpperCase();
-    return PhoneNumberUtils.formatNumberToE164(number, countryIso);
+    String normalizedNumber = PhoneNumberUtils.formatNumberToE164(number, countryIso);
+    if (normalizedNumber == null && LookupUtils.isChineseCustomerServiceHotline(normalizedNumber, number, countryIso)) {
+      normalizedNumber = number;
+    }
+    return normalizedNumber;
   }
 
   private static File getFilePath(Context context, String normalizedNumber) {

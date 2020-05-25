@@ -303,7 +303,7 @@ public class LookupProvider extends ContentProvider {
     } catch (UnsupportedEncodingException e) {
     }
 
-    ArrayList<ContactInfo> results = null;
+    ArrayList<ContactInfo> results = new ArrayList<>();
     if ((type == NEARBY || type == NEARBY_AND_PEOPLE) && lastLocation != null) {
       ForwardLookup fl = ForwardLookup.getInstance(getContext());
       List<ContactInfo> nearby = fl.lookup(getContext(), filter, lastLocation);
@@ -311,6 +311,7 @@ public class LookupProvider extends ContentProvider {
         results.addAll(nearby);
       }
     }
+    int splitter = results.size();
     if (type == PEOPLE || type == NEARBY_AND_PEOPLE) {
       PeopleLookup pl = PeopleLookup.getInstance(getContext());
       List<ContactInfo> people = pl.lookup(getContext(), filter);
@@ -326,7 +327,7 @@ public class LookupProvider extends ContentProvider {
 
     Cursor cursor = null;
     try {
-      cursor = buildResultCursor(projection, results, maxResults);
+      cursor = buildResultCursor(projection, results, maxResults, splitter);
       if (DEBUG) {
         Log.v(TAG, "handleFilter(" + filter + "): " + cursor.getCount() + " matches");
       }
@@ -343,9 +344,10 @@ public class LookupProvider extends ContentProvider {
    * @param projection Columns to include in query
    * @param results Results for the forward lookup
    * @param maxResults Maximum number of rows/results to add to cursor
+   * @param splitter nearby / people lookup result splitter
    * @return Cursor for forward lookup query results
    */
-  private Cursor buildResultCursor(String[] projection, List<ContactInfo> results, int maxResults)
+  private Cursor buildResultCursor(String[] projection, List<ContactInfo> results, int maxResults, int splitter)
       throws JSONException {
     // Extended directories always use this projection
     MatrixCursor cursor = new MatrixCursor(Projections.DATA_PROJECTION);
@@ -354,9 +356,10 @@ public class LookupProvider extends ContentProvider {
     for (ContactInfo result : results) {
       Object[] row = new Object[Projections.DATA_PROJECTION.length];
 
+      String address = getAddress(result);
       row[Projections.ID] = id;
       row[Projections.PHONE_TYPE] = result.type;
-      row[Projections.PHONE_LABEL] = getAddress(result);
+      row[Projections.PHONE_LABEL] = (address != null && id <= splitter) ? address : "[NOADDR]" + result.label;
       row[Projections.PHONE_NUMBER] = result.number;
       row[Projections.DISPLAY_NAME] = result.name;
       row[Projections.PHOTO_ID] = 0;

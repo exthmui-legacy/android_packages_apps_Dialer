@@ -177,7 +177,10 @@ public class CallDetailsHeaderViewHolder extends RecyclerView.ViewHolder
         numberView.setVisibility(View.VISIBLE);
         String secondaryInfo =
             TextUtils.isEmpty(contact.getNumberLabel())
-                ? contact.getDisplayNumber()
+                ? context.getString(
+                    com.android.dialer.contacts.resources.R.string.call_subject_type_and_number,
+                    PhoneNumberHelper.getLocationOrTag(context, contact.getDisplayNumber(), null),
+                    contact.getDisplayNumber())
                 : context.getString(
                     com.android.dialer.contacts.resources.R.string.call_subject_type_and_number,
                     contact.getNumberLabel(),

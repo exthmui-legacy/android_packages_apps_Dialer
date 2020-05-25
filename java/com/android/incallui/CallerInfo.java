@@ -503,7 +503,7 @@ public class CallerInfo {
    */
   public void updateGeoDescription(Context context, String fallbackNumber) {
     String number = TextUtils.isEmpty(phoneNumber) ? fallbackNumber : phoneNumber;
-    geoDescription = PhoneNumberHelper.getGeoDescription(context, number, countryIso);
+    geoDescription = PhoneNumberHelper.getLocationOrTag(context, number, countryIso);
   }
 
   /** @return a string debug representation of this instance. */

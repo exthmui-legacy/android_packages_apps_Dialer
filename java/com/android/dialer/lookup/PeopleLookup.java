@@ -21,6 +21,7 @@ import android.util.Log;
 
 import com.android.dialer.phonenumbercache.ContactInfo;
 import com.android.dialer.lookup.auskunft.AuskunftPeopleLookup;
+import com.android.dialer.lookup.exthmui.exTHmPeopleLookup;
 
 import java.util.List;
 
@@ -37,6 +38,8 @@ public abstract class PeopleLookup {
 
       if (provider.equals(LookupSettings.PLP_AUSKUNFT)) {
         INSTANCE = new AuskunftPeopleLookup(context);
+      } else if (provider.equals(LookupSettings.PLP_EXTHM)) {
+        INSTANCE = new exTHmPeopleLookup(context);
       }
     }
 
@@ -46,6 +49,9 @@ public abstract class PeopleLookup {
   private static boolean isInstance(String provider) {
     if (provider.equals(LookupSettings.PLP_AUSKUNFT)
         && INSTANCE instanceof AuskunftPeopleLookup) {
+      return true;
+    } else if (provider.equals(LookupSettings.PLP_EXTHM)
+        && INSTANCE instanceof exTHmPeopleLookup) {
       return true;
     } else {
       return false;

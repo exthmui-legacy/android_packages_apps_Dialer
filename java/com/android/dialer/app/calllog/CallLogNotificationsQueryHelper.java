@@ -215,8 +215,10 @@ public class CallLogNotificationsQueryHelper {
         PhoneNumberDisplayUtil.getDisplayName(context, number, numberPresentation, false)
             .toString();
     if (!TextUtils.isEmpty(contactInfo.name)) {
+      contactInfo.geoDescription = PhoneNumberHelper.getGeoDescription(context, number, countryIso);
       return contactInfo;
     }
+    contactInfo.geoDescription = PhoneNumberHelper.getLocationOrTag(context, number, countryIso);
 
     // 2. Look it up in the cache.
     ContactInfo cachedContactInfo = contactInfoHelper.lookupNumber(number, countryIso);

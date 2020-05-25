@@ -15,8 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Plakken tichteby</string>
-    <string name="people">Minsken</string>
     <string name="lookup_settings_label">Telefoannûmer sykje</string>
     <string name="enable_forward_lookup_title">Foarút sykje</string>
     <string name="enable_forward_lookup_summary">Plakken tichteby wylst it sykjen yn de kiezer toane</string>

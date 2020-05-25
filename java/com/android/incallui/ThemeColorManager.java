@@ -57,24 +57,31 @@ public class ThemeColorManager {
 
   public void onForegroundCallChanged(Context context, @Nullable DialerCall newForegroundCall) {
     if (newForegroundCall == null) {
-      updateThemeColors(context, getHighlightColor(context, pendingPhoneAccountHandle), false);
+      updateThemeColors(context, getHighlightColor(context, pendingPhoneAccountHandle), false, 0);
     } else {
       updateThemeColors(
           context,
           getHighlightColor(context, newForegroundCall.getAccountHandle()),
-          newForegroundCall.isSpam());
+          newForegroundCall.isSpam(), newForegroundCall.getCallerType());
     }
   }
 
-  private void updateThemeColors(Context context, @ColorInt int highlightColor, boolean isSpam) {
+  private void updateThemeColors(Context context, @ColorInt int highlightColor, boolean isSpam, int callerType) {
     MaterialPalette palette;
-    if (isSpam) {
+    if (isSpam || callerType < 0) {
       palette =
           colorMap.calculatePrimaryAndSecondaryColor(R.color.incall_call_spam_background_color);
       backgroundColorTop = context.getColor(R.color.incall_background_gradient_spam_top);
       backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_spam_middle);
       backgroundColorBottom = context.getColor(R.color.incall_background_gradient_spam_bottom);
       backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_spam);
+    } else if (callerType > 0) {
+      palette =
+          colorMap.calculatePrimaryAndSecondaryColor(R.color.incall_call_service_background_color);
+      backgroundColorTop = context.getColor(R.color.incall_background_gradient_service_top);
+      backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_service_middle);
+      backgroundColorBottom = context.getColor(R.color.incall_background_gradient_service_bottom);
+      backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_service);
     } else {
       palette = colorMap.calculatePrimaryAndSecondaryColor(highlightColor);
       backgroundColorTop = context.getColor(R.color.incall_background_gradient_top);

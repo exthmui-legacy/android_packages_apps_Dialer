@@ -24,6 +24,7 @@ import android.util.Log;
 import com.android.dialer.phonenumbercache.ContactInfo;
 import com.android.dialer.lookup.auskunft.AuskunftReverseLookup;
 import com.android.dialer.lookup.dastelefonbuch.TelefonbuchReverseLookup;
+import com.android.dialer.lookup.exthmui.exTHmReverseLookup;
 import com.android.dialer.lookup.opencnam.OpenCnamReverseLookup;
 import com.android.dialer.lookup.yellowpages.YellowPagesReverseLookup;
 import com.android.dialer.lookup.zabasearch.ZabaSearchReverseLookup;
@@ -52,6 +53,8 @@ public abstract class ReverseLookup {
         INSTANCE = new TelefonbuchReverseLookup(context);
       } else if (provider.equals(LookupSettings.RLP_AUSKUNFT)) {
         INSTANCE = new AuskunftReverseLookup(context);
+      } else if (provider.equals(LookupSettings.RLP_EXTHM)) {
+        INSTANCE = new exTHmReverseLookup(context);
       }
     }
 
@@ -74,6 +77,9 @@ public abstract class ReverseLookup {
       return true;
     } else if (provider.equals(LookupSettings.RLP_AUSKUNFT)
         && INSTANCE instanceof AuskunftReverseLookup) {
+      return true;
+    } else if (provider.equals(LookupSettings.RLP_EXTHM)
+        && INSTANCE instanceof exTHmReverseLookup) {
       return true;
     } else {
       return false;
