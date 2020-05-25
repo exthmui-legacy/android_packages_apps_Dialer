@@ -303,7 +303,7 @@ public class LookupProvider extends ContentProvider {
     } catch (UnsupportedEncodingException e) {
     }
 
-    ArrayList<ContactInfo> results = null;
+    ArrayList<ContactInfo> results = new ArrayList<>();
     if ((type == NEARBY || type == NEARBY_AND_PEOPLE) && lastLocation != null) {
       ForwardLookup fl = ForwardLookup.getInstance(getContext());
       List<ContactInfo> nearby = fl.lookup(getContext(), filter, lastLocation);
