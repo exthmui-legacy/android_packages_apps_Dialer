@@ -15,8 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Llugares averaos</string>
-    <string name="people">Persones</string>
     <string name="lookup_settings_label">Gueta de númberos telefónicos</string>
     <string name="enable_forward_lookup_title">Gueta direuta</string>
     <string name="enable_forward_lookup_summary">Amuesa llugares averaos cuando guetes nel marcador</string>

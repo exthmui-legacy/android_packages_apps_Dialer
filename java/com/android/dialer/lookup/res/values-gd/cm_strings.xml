@@ -15,8 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Àitichean faisg ort</string>
-    <string name="people">Daoine</string>
     <string name="lookup_settings_label">Rannsachadh àireamhan fòn</string>
     <string name="enable_forward_lookup_title">Rannsachadh air adhart</string>
     <string name="enable_forward_lookup_summary">Seall ionadan am fagas nuair a bhios mi a’ lorg rud san daithealair</string>
