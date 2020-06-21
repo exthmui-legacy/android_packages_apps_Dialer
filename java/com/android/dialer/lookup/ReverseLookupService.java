@@ -30,6 +30,8 @@ import com.android.dialer.logging.ContactLookupResult;
 import com.android.dialer.phonenumbercache.ContactInfo;
 import com.android.incallui.bindings.PhoneNumberService;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 public class ReverseLookupService implements PhoneNumberService, Handler.Callback {
@@ -67,7 +69,11 @@ public class ReverseLookupService implements PhoneNumberService, Handler.Callbac
 
     // Can't do reverse lookup without a number
     if (normalizedNumber == null) {
-      return;
+      if (phoneNumber == null) {
+        return;
+      } else {
+        normalizedNumber = phoneNumber;
+      }
     }
 
     LookupRequest request = new LookupRequest();
