@@ -359,7 +359,7 @@ public class LookupProvider extends ContentProvider {
       String address = getAddress(result);
       row[Projections.ID] = id;
       row[Projections.PHONE_TYPE] = result.type;
-      row[Projections.PHONE_LABEL] = (address != null && id <= splitter) ? address : result.number + " | " + result.label;
+      row[Projections.PHONE_LABEL] = (address != null && id <= splitter) ? address : "[NOADDR]" + result.label;
       row[Projections.PHONE_NUMBER] = result.number;
       row[Projections.DISPLAY_NAME] = result.name;
       row[Projections.PHOTO_ID] = 0;
