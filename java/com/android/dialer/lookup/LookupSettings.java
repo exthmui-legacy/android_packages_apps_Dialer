@@ -35,10 +35,12 @@ public final class LookupSettings {
   public static final String FLP_DEFAULT = FLP_GOOGLE;
 
   /** People lookup providers */
+  public static final String PLP_EXTHM = "exTHmUI";
   public static final String PLP_AUSKUNFT = "Auskunft";
-  public static final String PLP_DEFAULT = PLP_AUSKUNFT;
+  public static final String PLP_DEFAULT = PLP_EXTHM;
 
   /** Reverse lookup providers */
+  public static final String RLP_EXTHM = "exTHmUI";
   public static final String RLP_OPENCNAM = "OpenCnam";
   public static final String RLP_YELLOWPAGES = "YellowPages";
   public static final String RLP_YELLOWPAGES_CA = "YellowPages_CA";
@@ -46,7 +48,7 @@ public final class LookupSettings {
   public static final String RLP_CYNGN_CHINESE = "CyngnChinese";
   public static final String RLP_DASTELEFONBUCH = "DasTelefonbuch";
   public static final String RLP_AUSKUNFT = "Auskunft";
-  public static final String RLP_DEFAULT = RLP_OPENCNAM;
+  public static final String RLP_DEFAULT = RLP_EXTHM;
 
   private LookupSettings() {
   }

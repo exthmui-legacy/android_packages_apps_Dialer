@@ -15,6 +15,8 @@ include $(CLEAR_VARS)
 # The base directory for Dialer sources.
 BASE_DIR := java/com/android
 
+EXTHMUI_DIR := java/org/exthmui
+
 # Exclude files incompatible with AOSP.
 EXCLUDE_FILES := \
 	$(BASE_DIR)/incallui/calllocation/impl/AuthException.java \
@@ -77,6 +79,8 @@ LOCAL_FULL_LIBS_MANIFEST_FILES := \
 LOCAL_SRC_FILES := $(call all-java-files-under, $(BASE_DIR))
 LOCAL_SRC_FILES += $(call all-proto-files-under, $(BASE_DIR))
 LOCAL_SRC_FILES += $(call all-Iaidl-files-under, $(BASE_DIR))
+LOCAL_SRC_FILES += $(call all-java-files-under, $(EXTHMUI_DIR))
+LOCAL_SRC_FILES += $(call all-Iaidl-files-under, $(EXTHMUI_DIR))
 LOCAL_SRC_FILES := $(filter-out $(EXCLUDE_FILES),$(LOCAL_SRC_FILES))
 
 LOCAL_AIDL_INCLUDES := $(LOCAL_PATH)/java

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
+ * Copyright (C) 2020 The exTHmUI Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -454,11 +455,13 @@ public class CallLogFragment extends Fragment
       cequintCallerIdManager = new CequintCallerIdManager();
     }
     contactInfoCache.setCequintCallerIdManager(cequintCallerIdManager);
+    contactInfoCache.setContext(getContext());
   }
 
   @Override
   public void onStop() {
     LogUtil.enterBlock("CallLogFragment.onStop");
+    contactInfoCache.setContext(null);
     super.onStop();
     adapter.onStop();
     contactInfoCache.stop();
