@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.exthmui.yellowpage.YellowPageReader;
 
 /** Utility class to look up the contact information for a given number. */
 public class ContactInfoHelper {
@@ -238,7 +239,8 @@ public class ContactInfoHelper {
       // If we did not find a matching contact, generate an empty contact info for the number.
       if (info == ContactInfo.EMPTY) {
         // Did not find a matching contact.
-        updatedInfo = createEmptyContactInfoForNumber(number, countryIso);
+        info = YellowPageReader.queryReverseContactInfo(context, number, number);
+        updatedInfo = info != null ? info : createEmptyContactInfoForNumber(number, countryIso);
       } else {
         updatedInfo = info;
       }

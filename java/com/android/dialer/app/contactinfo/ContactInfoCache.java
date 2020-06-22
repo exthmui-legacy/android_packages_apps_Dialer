@@ -171,14 +171,6 @@ public class ContactInfoCache {
     if (request.isLocalRequest()) {
       info = contactInfoHelper.lookupNumber(request.number, request.countryIso);
       if (info != null && !info.contactExists) {
-        // Let's check the local database first, the ContactInfo can also be override by other services.
-        if (mContext != null) {
-          ContactInfo newInfo = YellowPageReader.queryReverseContactInfo(mContext, request.number, request.number);
-          if (newInfo != null) {
-            info = newInfo;
-          }
-        }
-
         // TODO(wangqi): Maybe skip look up if it's already available in cached number lookup
         // service.
         long start = SystemClock.elapsedRealtime();

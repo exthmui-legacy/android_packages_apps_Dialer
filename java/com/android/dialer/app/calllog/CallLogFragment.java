@@ -455,13 +455,11 @@ public class CallLogFragment extends Fragment
       cequintCallerIdManager = new CequintCallerIdManager();
     }
     contactInfoCache.setCequintCallerIdManager(cequintCallerIdManager);
-    contactInfoCache.setContext(getContext());
   }
 
   @Override
   public void onStop() {
     LogUtil.enterBlock("CallLogFragment.onStop");
-    contactInfoCache.setContext(null);
     super.onStop();
     adapter.onStop();
     contactInfoCache.stop();
