@@ -21,13 +21,12 @@ import android.provider.ContactsContract;
 
 public class Constants {
 
-    public static final int ROW_ID = 0;
-    public static final int ROW_NAME = 1;
-    public static final int ROW_AVATAR = 2;
-    public static final int ROW_MAIN_PHONE = 3;
-    public static final int ROW_PHONE_JSON = 4;
-    public static final int ROW_WEBSITE_JSON = 5;
-    public static final int ROW_ADDRESS_JSON = 6;
+    public static final int COLUMN_ID = 0;
+    public static final int COLUMN_NAME = 1;
+    public static final int COLUMN_AVATAR = 2;
+    public static final int COLUMN_PHONE_JSON = 3;
+    public static final int COLUMN_WEBSITE_JSON = 4;
+    public static final int COLUMN_ADDRESS_JSON = 5;
 
     public static final String[] DATA_PROJECTION =
         new String[] {

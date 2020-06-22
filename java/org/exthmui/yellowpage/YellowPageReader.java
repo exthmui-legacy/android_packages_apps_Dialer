@@ -39,8 +39,8 @@ public class YellowPageReader {
         if (cursor == null) return null;
         while (cursor.moveToNext()) {
             try {
-                ContactBuilder builder = ContactBuilder.forPeopleLookup(cursor.getString(Constants.ROW_MAIN_PHONE));
-                list.addAll(parsePeopleContactDataList(dataRowToInfo(cursor, builder), cursor.getString(Constants.ROW_PHONE_JSON), filter));
+                ContactBuilder builder = ContactBuilder.forPeopleLookup("");
+                list.addAll(parsePeopleContactDataList(dataRowToInfo(cursor, builder), cursor.getString(Constants.COLUMN_PHONE_JSON), filter));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -56,7 +56,7 @@ public class YellowPageReader {
         ContactBuilder builder = ContactBuilder.forReverseLookup(normalizedNumber, formattedNumber);
         try {
             info = dataRowToInfo(cursor, builder);
-            List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.ROW_PHONE_JSON));
+            List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.COLUMN_PHONE_JSON));
             for (ContactBuilder.PhoneNumber tNumber : phoneNumberList) {
                 if (tNumber.number.equals(normalizedNumber)) {
                     info.number = tNumber.number;
@@ -108,18 +108,18 @@ public class YellowPageReader {
     }
 
     private static ContactInfo dataRowToInfo(Cursor cursor, ContactBuilder builder) throws JSONException {
-        builder.setName(ContactBuilder.Name.createDisplayName(cursor.getString(Constants.ROW_NAME)))
-                .setPhotoUri(cursor.getString(Constants.ROW_AVATAR));
-        List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.ROW_PHONE_JSON));
+        builder.setName(ContactBuilder.Name.createDisplayName(cursor.getString(Constants.COLUMN_NAME)))
+                .setPhotoUri(cursor.getString(Constants.COLUMN_AVATAR));
+        List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.COLUMN_PHONE_JSON));
         for (ContactBuilder.PhoneNumber pn : phoneNumberList) {
             builder.addPhoneNumber(pn);
         }
-        JSONArray jsonArray = new JSONArray(cursor.getString(Constants.ROW_WEBSITE_JSON));
+        JSONArray jsonArray = new JSONArray(cursor.getString(Constants.COLUMN_WEBSITE_JSON));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             builder.addWebsite(new ContactBuilder.WebsiteUrl(jsonObject));
         }
-        jsonArray = new JSONArray(cursor.getString(Constants.ROW_ADDRESS_JSON));
+        jsonArray = new JSONArray(cursor.getString(Constants.COLUMN_ADDRESS_JSON));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             builder.addAddress(new ContactBuilder.Address(jsonObject));
