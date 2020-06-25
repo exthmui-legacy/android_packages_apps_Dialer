@@ -164,7 +164,7 @@ public class TopRow {
     int start = label.indexOf(state.connectionLabel());
     int end = start + state.connectionLabel().length();
     spannable.setSpan(
-        new ForegroundColorSpan(state.primaryColor()),
+        new ForegroundColorSpan(0xffffffff),
         start,
         end,
         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
