@@ -35,12 +35,12 @@ public class YellowPageReader {
 
     public static List<ContactInfo> queryForwardContactInfo(Context context, String filter) {
         ArrayList<ContactInfo> list = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(Constants.YELLOWPAGE_PROVIDER_URI_FORWARD, Constants.DATA_PROJECTION, filter, null, null, null);
+        Cursor cursor = context.getContentResolver().query(Constants.YELLOWPAGE_PROVIDER_URI_FORWARD, Constants.YellowPageData.DATA_PROJECTION, filter, null, null, null);
         if (cursor == null) return null;
         while (cursor.moveToNext()) {
             try {
                 ContactBuilder builder = ContactBuilder.forPeopleLookup("");
-                list.addAll(parsePeopleContactDataList(dataRowToInfo(cursor, builder), cursor.getString(Constants.COLUMN_PHONE_JSON), filter));
+                list.addAll(parsePeopleContactDataList(dataRowToInfo(cursor, builder), cursor.getString(Constants.YellowPageData.COLUMN_PHONE_JSON), filter));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -50,13 +50,13 @@ public class YellowPageReader {
     }
 
     public static ContactInfo queryReverseContactInfo(Context context, String normalizedNumber, String formattedNumber) {
-        Cursor cursor = context.getContentResolver().query(Constants.YELLOWPAGE_PROVIDER_URI_REVERSE, Constants.DATA_PROJECTION, normalizedNumber, null, null, null);
+        Cursor cursor = context.getContentResolver().query(Constants.YELLOWPAGE_PROVIDER_URI_REVERSE, Constants.YellowPageData.DATA_PROJECTION, normalizedNumber, null, null, null);
         if (cursor == null || !cursor.moveToPosition(0)) return null;
         ContactInfo info = null;
         ContactBuilder builder = ContactBuilder.forReverseLookup(normalizedNumber, formattedNumber);
         try {
             info = dataRowToInfo(cursor, builder);
-            List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.COLUMN_PHONE_JSON));
+            List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.YellowPageData.COLUMN_PHONE_JSON));
             for (ContactBuilder.PhoneNumber tNumber : phoneNumberList) {
                 if (tNumber.number.equals(normalizedNumber)) {
                     info.number = tNumber.number;
@@ -108,18 +108,18 @@ public class YellowPageReader {
     }
 
     private static ContactInfo dataRowToInfo(Cursor cursor, ContactBuilder builder) throws JSONException {
-        builder.setName(ContactBuilder.Name.createDisplayName(cursor.getString(Constants.COLUMN_NAME)))
-                .setPhotoUri(cursor.getString(Constants.COLUMN_AVATAR));
-        List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.COLUMN_PHONE_JSON));
+        builder.setName(ContactBuilder.Name.createDisplayName(cursor.getString(Constants.YellowPageData.COLUMN_NAME)))
+                .setPhotoUri(cursor.getString(Constants.YellowPageData.COLUMN_AVATAR));
+        List<ContactBuilder.PhoneNumber> phoneNumberList = createPhoneNumberList(cursor.getString(Constants.YellowPageData.COLUMN_PHONE_JSON));
         for (ContactBuilder.PhoneNumber pn : phoneNumberList) {
             builder.addPhoneNumber(pn);
         }
-        JSONArray jsonArray = new JSONArray(cursor.getString(Constants.COLUMN_WEBSITE_JSON));
+        JSONArray jsonArray = new JSONArray(cursor.getString(Constants.YellowPageData.COLUMN_WEBSITE_JSON));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             builder.addWebsite(new ContactBuilder.WebsiteUrl(jsonObject));
         }
-        jsonArray = new JSONArray(cursor.getString(Constants.COLUMN_ADDRESS_JSON));
+        jsonArray = new JSONArray(cursor.getString(Constants.YellowPageData.COLUMN_ADDRESS_JSON));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             builder.addAddress(new ContactBuilder.Address(jsonObject));
