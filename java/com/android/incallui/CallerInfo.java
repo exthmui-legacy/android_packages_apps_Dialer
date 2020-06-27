@@ -504,7 +504,7 @@ public class CallerInfo {
    */
   public void updateGeoDescription(Context context, String fallbackNumber) {
     String number = TextUtils.isEmpty(phoneNumber) ? fallbackNumber : phoneNumber;
-    geoDescription = PhoneNumberHelper.getLocation(context, number);
+    geoDescription = PhoneNumberHelper.getLocationOrTag(context, number, countryIso, TextUtils.isEmpty(name));
     if (!TextUtils.isEmpty(geoDescription)) {
       shouldShowGeoDescription = true;
     }

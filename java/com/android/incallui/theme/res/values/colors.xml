@@ -64,4 +64,10 @@
   <color name="incall_background_gradient_spam_bottom">#B8E55135</color>
 
   <color name="incall_background_multiwindow_spam">#E9C22E2E</color>
+
+  <color name="incall_background_gradient_service_top">#E5126BAE</color>
+  <color name="incall_background_gradient_service_middle">#D61677B3</color>
+  <color name="incall_background_gradient_service_bottom">#B82486B9</color>
+
+  <color name="incall_background_multiwindow_service">#E9C22E2E</color>
 </resources>

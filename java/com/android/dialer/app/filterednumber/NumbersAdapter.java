@@ -70,7 +70,7 @@ public class NumbersAdapter extends SimpleCursorAdapter {
       info = new ContactInfo();
       info.number = number;
     }
-    final CharSequence locationOrType = getNumberTypeOrLocation(info);
+    final CharSequence locationOrType = getNumberTypeOrLocation(info, countryIso);
     final String displayNumber = getDisplayNumber(info);
     final String displayNumberStr =
         bidiFormatter.unicodeWrap(displayNumber, TextDirectionHeuristics.LTR);
@@ -119,14 +119,14 @@ public class NumbersAdapter extends SimpleCursorAdapter {
     }
   }
 
-  private CharSequence getNumberTypeOrLocation(ContactInfo info) {
+  private CharSequence getNumberTypeOrLocation(ContactInfo info, String countryIso) {
     if (!TextUtils.isEmpty(info.name)) {
       CharSequence label = ContactsContract.CommonDataKinds.Phone.getTypeLabel(
           context.getResources(), info.type, info.label);
-      String location = PhoneNumberHelper.getLocation(context, info.number);
+      String location = PhoneNumberHelper.getLocationOrTag(context, info.number, countryIso, false);
       return PhoneNumberHelper.getPreferredName(info.name, location, label);
     } else {
-      return PhoneNumberHelper.getLocation(context, info.number);
+      return PhoneNumberHelper.getLocationOrTag(context, info.number, countryIso, true);
     }
   }
 

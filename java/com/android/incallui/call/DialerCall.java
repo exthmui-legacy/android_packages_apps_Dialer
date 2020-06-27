@@ -107,6 +107,8 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
+import org.exthmui.yellowpage.PhoneNumberTag;
+
 /** Describes a single call and its state. */
 public class DialerCall implements VideoTechListener, StateChangedListener, CapabilitiesListener {
 
@@ -204,8 +206,18 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
   @Nullable private PreferredAccountRecorder preferredAccountRecorder;
   private boolean isCallRemoved;
 
+  @Nullable private PhoneNumberTag.PhoneNumberInfo callerInfo;
+
   public static String getNumberFromHandle(Uri handle) {
     return handle == null ? "" : handle.getSchemeSpecificPart();
+  }
+
+  public PhoneNumberTag.PhoneNumberInfo getCallerInfo() {
+    return callerInfo;
+  }
+
+  public void setCallerInfo(PhoneNumberTag.PhoneNumberInfo info) {
+    this.callerInfo = info;
   }
 
   /**
@@ -1309,7 +1321,7 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
   }
 
   public boolean isSpam() {
-    if (spamStatus == null || !spamStatus.isSpam()) {
+    if (spamStatus == null || (!spamStatus.isSpam() && getCallerType() >= 0)) {
       return false;
     }
 
@@ -1322,6 +1334,13 @@ public class DialerCall implements VideoTechListener, StateChangedListener, Capa
     }
 
     return true;
+  }
+
+  public int getCallerType() {
+    if (callerInfo == null || !isIncoming()) {
+      return 0;
+    } 
+    return callerInfo.type;
   }
 
   public boolean isBlocked() {

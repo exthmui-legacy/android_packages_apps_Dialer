@@ -255,7 +255,7 @@ public class ContactInfoHelper {
     contactInfo.number = number;
     contactInfo.formattedNumber = formatPhoneNumber(number, null, countryIso);
     contactInfo.normalizedNumber = PhoneNumberUtils.formatNumberToE164(number, countryIso);
-    contactInfo.geoDescription = PhoneNumberHelper.getLocation(context, number);
+    contactInfo.geoDescription = PhoneNumberHelper.getLocationOrTag(context, number, countryIso, true);
     contactInfo.lookupUri = createTemporaryContactUri(contactInfo.formattedNumber);
     return contactInfo;
   }
@@ -368,7 +368,7 @@ public class ContactInfoHelper {
     info.label = phoneLookupCursor.getString(PhoneQuery.LABEL);
     info.number = phoneLookupCursor.getString(PhoneQuery.MATCHED_NUMBER);
     info.normalizedNumber = phoneLookupCursor.getString(PhoneQuery.NORMALIZED_NUMBER);
-    info.geoDescription = PhoneNumberHelper.getLocation(context, info.number);
+    info.geoDescription = PhoneNumberHelper.getLocationOrTag(context, info.number, null, false);
     info.photoId = phoneLookupCursor.getLong(PhoneQuery.PHOTO_ID);
     info.photoUri = UriUtils.parseUriOrNull(phoneLookupCursor.getString(PhoneQuery.PHOTO_URI));
     info.formattedNumber = null;

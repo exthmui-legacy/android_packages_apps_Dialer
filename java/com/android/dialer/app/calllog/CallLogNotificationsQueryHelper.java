@@ -210,15 +210,16 @@ public class CallLogNotificationsQueryHelper {
     contactInfo.formattedNumber = PhoneNumberHelper.formatNumber(context, number, countryIso);
     // contactInfo.normalizedNumber is not PhoneNumberUtils.normalizeNumber. Read ContactInfo.
     contactInfo.normalizedNumber = PhoneNumberUtils.formatNumberToE164(number, countryIso);
-    contactInfo.geoDescription = PhoneNumberHelper.getLocation(context, number);
 
     // 1. Special number representation.
     contactInfo.name =
         PhoneNumberDisplayUtil.getDisplayName(context, number, numberPresentation, false)
             .toString();
     if (!TextUtils.isEmpty(contactInfo.name)) {
+      contactInfo.geoDescription = PhoneNumberHelper.getLocationOrTag(context, number, countryIso, false);
       return contactInfo;
     }
+    contactInfo.geoDescription = PhoneNumberHelper.getLocationOrTag(context, number, countryIso, true);
 
     // 2. Look it up in the cache.
     ContactInfo cachedContactInfo = contactInfoHelper.lookupNumber(number, countryIso);

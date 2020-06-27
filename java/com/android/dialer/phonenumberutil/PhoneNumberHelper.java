@@ -40,7 +40,8 @@ import com.android.dialer.oem.PhoneNumberUtilsAccessor;
 import com.android.dialer.phonenumbergeoutil.PhoneNumberGeoUtilComponent;
 import com.android.dialer.telecom.TelecomUtil;
 import com.google.common.base.Optional;
-import com.mokee.cloud.location.OfflineNumber;
+
+import org.exthmui.yellowpage.PhoneNumberTag;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -224,16 +225,19 @@ public class PhoneNumberHelper {
     return number != null && LEGACY_UNKNOWN_NUMBERS.contains(number.toString());
   }
 
-  public static String getLocation(Context context, String number) {
+  public static String getLocationOrTag(Context context, String number, @Nullable String countryIso, boolean findTag) {
     if (TextUtils.isEmpty(number)) {
       return null;
+    } else if (findTag) {
+      PhoneNumberTag.PhoneNumberInfo pInfo = PhoneNumberTag.getPhoneNumberInfo(context, number, countryIso);
+      return TextUtils.isEmpty(pInfo.tag) ? getGeoDescription(context, number, countryIso) : pInfo.tag;
     } else {
-      return OfflineNumber.detect(number, context);
+      return getGeoDescription(context, number, countryIso);
     }
   }
 
   public static String getPreferredName(CharSequence preferredName, CharSequence location, CharSequence... number) {
-    boolean hasNumber = number != null;
+    boolean hasNumber = number != null && number.length > 0;
     if (!TextUtils.isEmpty(location) && !TextUtils.equals(preferredName, location)) {
       return String.join(" ", !hasNumber ? preferredName : number[0], location);
     } else {

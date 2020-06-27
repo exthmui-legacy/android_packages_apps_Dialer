@@ -174,7 +174,7 @@ public class CallDetailsHeaderViewHolder extends RecyclerView.ViewHolder
       nameView.setText(context.getResources().getString(R.string.emergency_number));
     } else {
       nameView.setText(contact.getNameOrNumber());
-      String location = PhoneNumberHelper.getLocation(context, contact.getNumber());
+      String location = PhoneNumberHelper.getLocationOrTag(context, contact.getNumber(), null, TextUtils.equals(contact.getNameOrNumber(), contact.getNumber()) || TextUtils.equals(contact.getNameOrNumber(), contact.getDisplayNumber()));
       if (!TextUtils.isEmpty(contact.getDisplayNumber())) {
         numberView.setVisibility(View.VISIBLE);
         String secondaryInfo =
