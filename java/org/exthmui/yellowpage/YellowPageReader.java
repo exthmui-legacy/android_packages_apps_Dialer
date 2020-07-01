@@ -50,6 +50,7 @@ public class YellowPageReader {
     }
 
     public static ContactInfo queryReverseContactInfo(Context context, String normalizedNumber, String formattedNumber) {
+        normalizedNumber = normalizedNumber.replace(" ", "");
         Cursor cursor = context.getContentResolver().query(Constants.YELLOWPAGE_PROVIDER_URI_REVERSE, Constants.YellowPageData.DATA_PROJECTION, normalizedNumber, null, null, null);
         if (cursor == null || !cursor.moveToPosition(0)) return null;
         ContactInfo info = null;
