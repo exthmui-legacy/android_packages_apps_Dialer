@@ -169,6 +169,6 @@ public class LookupUtils {
   }
   
   public static boolean isChineseCustomerServiceHotline(String normalizedNumber, String phoneNumber, String countryIso) {
-    return TextUtils.isEmpty(normalizedNumber) && countryIso.equals("CN")  && phoneNumber.length() >= 5;
+    return !TextUtils.isEmpty(phoneNumber) && TextUtils.isEmpty(normalizedNumber) && countryIso.equals("CN") && phoneNumber.length() >= 5;
   }
 }
