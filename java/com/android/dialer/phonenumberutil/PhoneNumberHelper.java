@@ -238,10 +238,13 @@ public class PhoneNumberHelper {
 
   public static String getPreferredName(CharSequence preferredName, CharSequence location, CharSequence... number) {
     boolean hasNumber = number != null && number.length > 0;
+    boolean hasNumberLabel = hasNumber && number.length > 1 && !TextUtils.isEmpty(number[1]);
     if (!TextUtils.isEmpty(location) && !TextUtils.equals(preferredName, location)) {
-      return String.join(" ", !hasNumber ? preferredName : number[0], location);
+      return String.join(" ", hasNumber ? number[0] : preferredName, hasNumberLabel ? number[1] : location);
+    } else if (hasNumberLabel) {
+      return String.join(" ", number);
     } else {
-      return String.valueOf(!hasNumber ? preferredName : number[0]);
+      return String.valueOf(hasNumber ? number[0] : preferredName);
     }
   }
 

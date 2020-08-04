@@ -115,7 +115,7 @@ public class BottomRow {
 
   private static CharSequence getLabelForPhoneNumber(PrimaryInfo primaryInfo) {
     if (!primaryInfo.nameIsNumber() && !TextUtils.isEmpty(primaryInfo.number())) {
-      return PhoneNumberHelper.getPreferredName(primaryInfo.name(), primaryInfo.location(), primaryInfo.label() + " " + primaryInfo.number());
+      return PhoneNumberHelper.getPreferredName(primaryInfo.name(), primaryInfo.location(), primaryInfo.number(), primaryInfo.label());
     } else {
       if (!TextUtils.isEmpty(primaryInfo.location())) {
         return primaryInfo.location();

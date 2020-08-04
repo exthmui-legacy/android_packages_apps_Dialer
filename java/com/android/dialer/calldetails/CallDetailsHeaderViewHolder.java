@@ -177,15 +177,8 @@ public class CallDetailsHeaderViewHolder extends RecyclerView.ViewHolder
       String location = PhoneNumberHelper.getLocationOrTag(context, contact.getNumber(), null, TextUtils.equals(contact.getNameOrNumber(), contact.getNumber()) || TextUtils.equals(contact.getNameOrNumber(), contact.getDisplayNumber()));
       if (!TextUtils.isEmpty(contact.getDisplayNumber())) {
         numberView.setVisibility(View.VISIBLE);
-        String secondaryInfo =
-            TextUtils.isEmpty(contact.getNumberLabel())
-                ? contact.getDisplayNumber()
-                : context.getString(
-                    com.android.dialer.contacts.resources.R.string.call_subject_type_and_number,
-                    contact.getNumberLabel(),
-                    contact.getDisplayNumber());
         // 通话详情
-        numberView.setText(PhoneNumberHelper.getPreferredName(contact.getNameOrNumber(), location, secondaryInfo));
+        numberView.setText(PhoneNumberHelper.getPreferredName(contact.getNameOrNumber(), location, contact.getNameOrNumber(), contact.getNumberLabel()));
       } else {
         if (!TextUtils.isEmpty(location)) {
           numberView.setVisibility(View.VISIBLE);
