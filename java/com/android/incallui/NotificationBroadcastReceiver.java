@@ -36,6 +36,8 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.exthmui.game.GamingModeUtils;
+
 /**
  * Accepts broadcast Intents which will be prepared by {@link StatusBarNotifier} and thus sent from
  * the notification manager. This should be visible from outside, but shouldn't be exported.
@@ -188,12 +190,12 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             new FutureCallback<Void>() {
               @Override
               public void onSuccess(Void result) {
-                answerIncomingCallCallback(call, videoState);
+                answerIncomingCallCallback(call, videoState, context);
               }
 
               @Override
               public void onFailure(Throwable t) {
-                answerIncomingCallCallback(call, videoState);
+                answerIncomingCallCallback(call, videoState, context);
                 // TODO(erfanian): Enumerate all error states and specify recovery strategies.
                 throw new RuntimeException("Failed to successfully complete pre call tasks.", t);
               }
@@ -203,9 +205,11 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     }
   }
 
-  private void answerIncomingCallCallback(@NonNull DialerCall call, int videoState) {
+  private void answerIncomingCallCallback(@NonNull DialerCall call, int videoState, Context context) {
     call.answer(videoState);
-    InCallPresenter.getInstance().showInCall(false /* showDialpad */, false /* newOutgoingCall */);
+    if (!GamingModeUtils.isInGamingMode(context)) {
+      InCallPresenter.getInstance().showInCall(false /* showDialpad */, false /* newOutgoingCall */);
+    }
   }
 
   private void declineIncomingCall() {
