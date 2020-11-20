@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="drawable" name="business_avatar">@drawable/quantum_ic_business_vd_theme_24</item>
+    <item type="drawable" name="voicemail_avatar">@drawable/quantum_ic_voicemail_vd_theme_24</item>
+    <item type="drawable" name="spam_avatar">@drawable/quantum_ic_report_vd_theme_24</item>
+    <item type="drawable" name="conference_avatar">@drawable/quantum_ic_group_vd_theme_24</item>
+    <item type="drawable" name="person_avatar">@drawable/product_logo_avatar_anonymous_white_color_120</item>
+</resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2006 The Android Open Source Project
+
+<!-- Copyright (C) 2020 The exTHmUI Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,18 +15,6 @@
      limitations under the License.
 -->
 
-<!-- A layout representing key "*" in the dialpad -->
-<com.android.dialer.dialpadview.DialpadKeyButton
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/star"
-    style="?attr/dialpad_key_style">
-
-  <LinearLayout
-      android:id="@+id/dialpad_key_layout"
-      style="@style/DialpadKeyInternalLayoutStyle">
-
-    <com.android.dialer.dialpadview.DialpadTextView
-        android:id="@+id/dialpad_key_number"
-        style="@style/DialpadKeyStarStyle"/>
-  </LinearLayout>
-</com.android.dialer.dialpadview.DialpadKeyButton>
+<resources>
+    <color name="actionbar_textColor">@android:color/white</color>
+</resources>

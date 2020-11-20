@@ -31,4 +31,6 @@
 
   <!-- Legacy -->
   <color name="blue_grey_100">#CFD8DC</color>
+
+  <color name="call_log_card_background">@android:color/white</color>
 </resources>

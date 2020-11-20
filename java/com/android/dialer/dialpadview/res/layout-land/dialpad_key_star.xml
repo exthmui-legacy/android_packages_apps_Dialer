@@ -18,7 +18,7 @@
 <com.android.dialer.dialpadview.DialpadKeyButton
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/star"
-    style="@style/DialpadKeyButtonStyle">
+    style="?attr/dialpad_key_style">
 
   <LinearLayout
       android:id="@+id/dialpad_key_layout"
