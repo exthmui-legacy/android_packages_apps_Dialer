@@ -159,6 +159,8 @@ public class MainSearchController implements SearchBarListener {
 
     activity.setTitle(R.string.dialpad_activity_title);
 
+    hideAllOtherFragments();
+
     FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
 
     // Show Search
@@ -183,6 +185,14 @@ public class MainSearchController implements SearchBarListener {
     transaction.commit();
 
     notifyListenersOnSearchOpen();
+  }
+
+  private void hideAllOtherFragments() {
+    activity.findViewById(R.id.fragment_container).setVisibility(View.GONE);
+  }
+
+  private void showAllOtherFragments() {
+    activity.findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
   }
 
   /**
@@ -342,6 +352,7 @@ public class MainSearchController implements SearchBarListener {
       fab.show();
     }
     showBottomNav();
+    showAllOtherFragments();
     toolbar.collapse(animate);
     toolbarShadow.setVisibility(View.GONE);
     activity.getFragmentManager().beginTransaction().hide(searchFragment).commit();
@@ -412,6 +423,7 @@ public class MainSearchController implements SearchBarListener {
     toolbar.showKeyboard();
     toolbarShadow.setVisibility(View.VISIBLE);
     hideBottomNav();
+    hideAllOtherFragments();
 
     FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
     // Show Search
@@ -558,6 +570,9 @@ public class MainSearchController implements SearchBarListener {
       // If the toolbar is slide up, that means the dialpad is showing. Thus we don't want to
       // request focus or we'll break physical/bluetooth keyboards typing.
       toolbar.expand(/* animate */ false, Optional.absent(), /* requestFocus */ !isSlideUp);
+    }
+    if (isInSearch()) {
+      hideAllOtherFragments();
     }
   }
 

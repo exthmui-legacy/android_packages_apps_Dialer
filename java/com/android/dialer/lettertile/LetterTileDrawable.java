@@ -67,6 +67,8 @@ public class LetterTileDrawable extends Drawable {
   public static final int TYPE_CONFERENCE = 6;
   @ContactType public static final int TYPE_DEFAULT = TYPE_PERSON;
 
+  private static String[] AVATAR_TYPES;
+
   /**
    * Shape indicates the letter tile shape. It can be either a {@link #SHAPE_CIRCLE}, otherwise, it
    * is a {@link #SHAPE_RECTANGLE}.
@@ -116,6 +118,9 @@ public class LetterTileDrawable extends Drawable {
 
   private String displayName;
 
+  private boolean mThemed;
+  private String[] mThemedTypes;
+
   public LetterTileDrawable(final Resources res) {
     colors = res.obtainTypedArray(R.array.letter_tile_colors);
     spamColor = res.getColor(R.color.spam_contact_background);
@@ -123,11 +128,16 @@ public class LetterTileDrawable extends Drawable {
     tileFontColor = res.getColor(R.color.letter_tile_font_color);
     letterToTileRatio = res.getFraction(R.dimen.letter_to_tile_ratio, 1, 1);
     defaultPersonAvatar =
-        res.getDrawable(R.drawable.product_logo_avatar_anonymous_white_color_120, null);
-    defaultBusinessAvatar = res.getDrawable(R.drawable.quantum_ic_business_vd_theme_24, null);
-    defaultVoicemailAvatar = res.getDrawable(R.drawable.quantum_ic_voicemail_vd_theme_24, null);
-    defaultSpamAvatar = res.getDrawable(R.drawable.quantum_ic_report_vd_theme_24, null);
-    defaultConferenceAvatar = res.getDrawable(R.drawable.quantum_ic_group_vd_theme_24, null);
+        res.getDrawable(R.drawable.person_avatar, null);
+    defaultBusinessAvatar = res.getDrawable(R.drawable.business_avatar, null);
+    defaultVoicemailAvatar = res.getDrawable(R.drawable.voicemail_avatar, null);
+    defaultSpamAvatar = res.getDrawable(R.drawable.spam_avatar, null);
+    defaultConferenceAvatar = res.getDrawable(R.drawable.conference_avatar, null);
+
+    if (AVATAR_TYPES == null) {
+      AVATAR_TYPES = res.getStringArray(R.array.avatar_types);
+    }
+    mThemedTypes = res.getStringArray(R.array.themed_avatars);
 
     paint.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
     paint.setTextAlign(Align.CENTER);
@@ -238,7 +248,11 @@ public class LetterTileDrawable extends Drawable {
       }
 
       drawable.setBounds(getScaledBounds(scale, offset));
-      drawable.setAlpha(drawable == defaultSpamAvatar ? SPAM_ALPHA : ALPHA);
+      if (mThemed) {
+        drawable.setAlpha(255);
+      } else {
+         drawable.setAlpha(drawable == defaultSpamAvatar ? SPAM_ALPHA : ALPHA);
+      }
       drawable.draw(canvas);
     }
   }
@@ -278,7 +292,11 @@ public class LetterTileDrawable extends Drawable {
 
   @Override
   public void setColorFilter(final ColorFilter cf) {
-    paint.setColorFilter(cf);
+    if (mThemed) {
+      paint.setColorFilter(null);
+    } else {
+      paint.setColorFilter(cf);
+    }
   }
 
   @Override
@@ -346,6 +364,16 @@ public class LetterTileDrawable extends Drawable {
 
   private LetterTileDrawable setContactType(@ContactType int contactType) {
     this.contactType = contactType;
+    mThemed = false;
+    if (contactType > AVATAR_TYPES.length) {
+      contactType = TYPE_DEFAULT;
+    }
+    for (String s : mThemedTypes) {
+        if (s.equals(AVATAR_TYPES[contactType - 1])) {
+            mThemed = true;
+            break;
+        }
+    }
     return this;
   }
 

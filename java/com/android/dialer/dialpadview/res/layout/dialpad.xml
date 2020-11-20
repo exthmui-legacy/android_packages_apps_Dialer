@@ -31,11 +31,11 @@
     <include layout="@layout/dialpad_key_one"/>
     <include
         android:id="@+id/two"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <include
         android:id="@+id/three"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <Space style="@style/DialpadSpaceStyle"/>
   </LinearLayout>
@@ -48,15 +48,15 @@
     <Space style="@style/DialpadSpaceStyle"/>
     <include
         android:id="@+id/four"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <include
         android:id="@+id/five"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <include
         android:id="@+id/six"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <Space style="@style/DialpadSpaceStyle"/>
   </LinearLayout>
@@ -69,15 +69,15 @@
     <Space style="@style/DialpadSpaceStyle"/>
     <include
         android:id="@+id/seven"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <include
         android:id="@+id/eight"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <include
         android:id="@+id/nine"
-        style="@style/DialpadKeyButtonStyle"
+        style="?attr/dialpad_key_style"
         layout="@layout/dialpad_key"/>
     <Space style="@style/DialpadSpaceStyle"/>
   </LinearLayout>
