@@ -64,10 +64,10 @@
   <string name="voice_search_not_available">无法使用语音搜索</string>
   <string name="dialer_hint_find_contact">搜索联系人</string>
   <string name="block_number_search_hint">添加号码或搜索联系人</string>
-  <string name="call_log_all_empty">您没有任何通话记录</string>
+  <string name="call_log_all_empty">您还没有任何通话记录</string>
   <string name="call_log_all_empty_action">拨打电话</string>
-  <string name="call_log_missed_empty">您没有任何未接电话。</string>
-  <string name="call_log_voicemail_empty">您未收到任何语音邮件。</string>
+  <string name="call_log_missed_empty">您还没有任何未接电话</string>
+  <string name="call_log_voicemail_empty">您还没有收到任何语音邮件</string>
   <string name="call_log_activity_title">通话记录</string>
   <string name="call_log_all_title">全部</string>
   <string name="call_log_missed_title">未接电话</string>
@@ -81,7 +81,7 @@
   <string name="search_shortcut_send_sms_message">发送短信</string>
   <string name="search_shortcut_make_video_call">发起视频通话</string>
   <string name="search_shortcut_block_number">屏蔽号码</string>
-  <string name="speed_dial_empty">尚未给任何联系人设定快速拨号</string>
+  <string name="speed_dial_empty">您还没有设定快速拨号</string>
   <string name="speed_dial_empty_add_favorite_action">添加常用联系人</string>
   <string name="remove_contact">移除</string>
   <string name="select_all">全选</string>
