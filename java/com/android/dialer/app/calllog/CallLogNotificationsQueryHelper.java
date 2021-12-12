@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2021 The exTHmUI Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -215,8 +216,10 @@ public class CallLogNotificationsQueryHelper {
         PhoneNumberDisplayUtil.getDisplayName(context, number, numberPresentation, false)
             .toString();
     if (!TextUtils.isEmpty(contactInfo.name)) {
+      contactInfo.geoDescription = PhoneNumberHelper.getGeoDescription(context, number, countryIso);
       return contactInfo;
     }
+    contactInfo.geoDescription = PhoneNumberHelper.getGeoDescription(context, number, countryIso);
 
     // 2. Look it up in the cache.
     ContactInfo cachedContactInfo = contactInfoHelper.lookupNumber(number, countryIso);

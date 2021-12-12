@@ -38,6 +38,9 @@ import com.android.dialer.oem.MotorolaUtils;
 import com.android.dialer.oem.PhoneNumberUtilsAccessor;
 import com.android.dialer.phonenumbergeoutil.PhoneNumberGeoUtilComponent;
 import com.android.dialer.telecom.TelecomUtil;
+
+import org.exthmui.yellowpage.PhoneNumberTag;
+
 import com.google.common.base.Optional;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -219,6 +222,15 @@ public class PhoneNumberHelper {
 
   public static boolean isLegacyUnknownNumbers(CharSequence number) {
     return number != null && LEGACY_UNKNOWN_NUMBERS.contains(number.toString());
+  }
+
+  public static String getLocationOrTag(Context context, String number, @Nullable String countryIso) {
+    if (TextUtils.isEmpty(number)) {
+      return null;
+    } else {
+      PhoneNumberTag.PhoneNumberInfo pInfo = PhoneNumberTag.getPhoneNumberInfo(context, number, countryIso);
+      return TextUtils.isEmpty(pInfo.tag) ? getGeoDescription(context, number, countryIso) : pInfo.tag;
+    }
   }
 
   /**

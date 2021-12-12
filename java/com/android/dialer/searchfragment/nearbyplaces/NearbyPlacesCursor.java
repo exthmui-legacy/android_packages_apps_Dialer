@@ -36,7 +36,7 @@ final class NearbyPlacesCursor extends MergeCursor implements SearchCursor {
   static NearbyPlacesCursor newInstance(
       Context context, Cursor nearbyPlacesCursor, long directoryId) {
     MatrixCursor headerCursor = new MatrixCursor(HEADER_PROJECTION);
-    headerCursor.addRow(new String[] {context.getString(R.string.nearby_places)});
+    headerCursor.addRow(new String[] {context.getString(R.string.phone_number_suggestions)});
     return new NearbyPlacesCursor(new Cursor[] {headerCursor, nearbyPlacesCursor}, directoryId);
   }
 

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2021 The exTHmUI Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +22,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
@@ -39,7 +41,7 @@ public final class NearbyPlaceViewHolder extends RecyclerView.ViewHolder
 
   private final Context context;
   private final TextView placeName;
-  private final TextView placeAddress;
+  private final TextView placeLabel;
   private final QuickContactBadge photo;
   private final RowClickListener listener;
 
@@ -51,7 +53,7 @@ public final class NearbyPlaceViewHolder extends RecyclerView.ViewHolder
     view.setOnClickListener(this);
     photo = view.findViewById(R.id.photo);
     placeName = view.findViewById(R.id.primary);
-    placeAddress = view.findViewById(R.id.secondary);
+    placeLabel = view.findViewById(R.id.secondary);
     context = view.getContext();
     this.listener = listener;
   }
@@ -64,19 +66,49 @@ public final class NearbyPlaceViewHolder extends RecyclerView.ViewHolder
     number = cursor.getString(Projections.PHONE_NUMBER);
     position = cursor.getPosition();
     String name = cursor.getString(Projections.DISPLAY_NAME);
-    String address = cursor.getString(Projections.PHONE_LABEL);
+    String label = cursor.getString(Projections.PHONE_LABEL);
 
     placeName.setText(QueryBoldingUtil.getNameWithQueryBolded(query, name, context));
-    placeAddress.setText(QueryBoldingUtil.getNameWithQueryBolded(query, address, context));
-    String photoUri = cursor.getString(Projections.PHOTO_URI);
-    ContactPhotoManager.getInstance(context)
-        .loadDialerThumbnailOrPhoto(
-            photo,
-            getContactUri(cursor),
-            cursor.getLong(Projections.PHOTO_ID),
-            photoUri == null ? null : Uri.parse(photoUri),
-            name,
-            LetterTileDrawable.TYPE_BUSINESS);
+    if (label.startsWith("[NOADDR]")) {
+      String sublabel = label.substring(8);
+      label = TextUtils.isEmpty(sublabel) ? number : context.getString(R.string.call_subject_type_and_number, sublabel, number);
+      placeLabel.setText(QueryBoldingUtil.getNumberWithQueryBolded(query, label));
+    } else {
+      placeLabel.setText(QueryBoldingUtil.getNameWithQueryBolded(query, label, context));
+    }
+
+
+    if (shouldShowPhoto(cursor)) {
+      placeName.setVisibility(View.VISIBLE);
+      photo.setVisibility(View.VISIBLE);
+      String photoUri = cursor.getString(Projections.PHOTO_URI);
+      ContactPhotoManager.getInstance(context)
+          .loadDialerThumbnailOrPhoto(
+              photo,
+              getContactUri(cursor),
+              cursor.getLong(Projections.PHOTO_ID),
+              photoUri == null ? null : Uri.parse(photoUri),
+              name,
+              LetterTileDrawable.TYPE_BUSINESS);
+    } else {
+      placeName.setVisibility(View.GONE);
+      photo.setVisibility(View.INVISIBLE);
+    }
+  }
+
+  // Show the contact photo next to only the first number if a contact has multiple numbers
+  private boolean shouldShowPhoto(SearchCursor cursor) {
+    int currentPosition = cursor.getPosition();
+    String currentLookupKey = cursor.getString(Projections.LOOKUP_KEY);
+    cursor.moveToPosition(currentPosition - 1);
+
+    if (!cursor.isHeader() && !cursor.isBeforeFirst()) {
+      String previousLookupKey = cursor.getString(Projections.LOOKUP_KEY);
+      cursor.moveToPosition(currentPosition);
+      return !currentLookupKey.equals(previousLookupKey);
+    }
+    cursor.moveToPosition(currentPosition);
+    return true;
   }
 
   private static Uri getContactUri(SearchCursor cursor) {

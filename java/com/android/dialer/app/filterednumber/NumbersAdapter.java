@@ -123,7 +123,7 @@ public class NumbersAdapter extends SimpleCursorAdapter {
       return ContactsContract.CommonDataKinds.Phone.getTypeLabel(
           context.getResources(), info.type, info.label);
     } else {
-      return PhoneNumberHelper.getGeoDescription(context, info.number, countryIso);
+      return PhoneNumberHelper.getLocationOrTag(context, info.number, countryIso);
     }
   }
 
