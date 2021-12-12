@@ -29,6 +29,11 @@
       android:visible="false"/>
 
   <item
+      android:id="@+id/yellow_page"
+      android:title="@string/action_menu_yellowpage"
+      app:showAsAction="collapseActionView"/>
+
+  <item
       android:id="@+id/settings"
       android:title="@string/settings"
       app:showAsAction="collapseActionView"/>

@@ -479,6 +479,11 @@ public class MainSearchController implements SearchBarListener {
     } else if (menuItem.getItemId() == R.id.menu_call_history) {
       final Intent intent = new Intent(activity, CallLogActivity.class);
       activity.startActivity(intent);
+    } else if (menuItem.getItemId() == R.id.yellow_page) {
+      final Intent it = new Intent();
+      it.setClassName("org.exthmui.yellowpage","org.exthmui.yellowpage.SettingsActivity");
+      it.setAction("android.intent.action.MAIN");
+      activity.startActivity(it);
     }
     return false;
   }

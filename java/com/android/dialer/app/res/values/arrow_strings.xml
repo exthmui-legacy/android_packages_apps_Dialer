@@ -37,4 +37,5 @@
     <string name="disable_proximity_sensor_summary">Do not turn off touchscreen and display in call based on proximity</string>
     <string name="sensor_settings_titile">Sensors</string>
 
+    <string name="action_menu_yellowpage">YellowPage Settings</string>
 </resources>
