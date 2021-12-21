@@ -20,4 +20,10 @@
     <string name="disable_proximity_sensor_summary">接打电话时不会关闭触摸屏和显示</string>
     <string name="sensor_settings_titile">传感器</string>
     <string name="action_menu_yellowpage">黄页设置</string>
+    <string name="incall_category_title">通话中</string>
+    <string name="incall_enable_dnd_title">在通话时启用勿扰模式</string>
+    <string name="incall_dnd_dialog_message">为了启用勿扰模式，请在下一个界面中授予电话应用控制勿扰模式状态的权限。\n请允许。</string>
+    <string name="deny">拒绝</string>
+    <string name="call_recording_category_title">通话录音</string>
+    <string name="call_recording_format">音频格式</string>
 </resources>
