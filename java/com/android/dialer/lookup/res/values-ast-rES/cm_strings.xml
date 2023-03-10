@@ -26,4 +26,5 @@
     <string name="people_lookup_provider_title">Fornidor de gueta de persones</string>
     <string name="reverse_lookup_provider_title">Fornidor de gueta inversa</string>
     <string name="lookup_disclaimer">Les guetes podríen unviase per un protocolu seguru (https) a sitios web remotos pa recoyer información. La consulta podría incluyir el númberu telefónicu de la otra parte o la consulta de la gueta</string>
+    <string name="nearby_places">Llugares cercanos</string>
 </resources>
